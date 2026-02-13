@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Be My Valentine, Jean?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Mali:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <link rel="preload" as="image" href="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdHY1M2NpbXBjcnlkZ25wNTAyZG84cDY5MjMyN3pwdDF3dGxvOTZ3aiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Zl7u48zLVFgLpRwq6f/giphy.gif">
+    <link rel="preload" as="image" href="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2hkcjI5c2VncDY0ZzIzaXRtd3hmejhuY2I5cWlycWgxMHN0bXoyaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/fFa05KbZowXiEIyRse/giphy.gif">
+    <link rel="preload" as="image" href="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2ZjcTh3bmJucjRlOWZkOXNsaXEydW0wYmN5Zmg4dXBheHE0ZHpqbiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/OBNZCbTy1s8u8i7Wre/giphy.gif">
+    <link rel="preload" as="image" href="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExa3ppOGJmajBrY2RwZXdnbDBncWVrcnVham53bWM0cDRlbXNhb2puMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/qpCvOBBmBkble/giphy.gif">
+    <link rel="preload" as="image" href="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Mali', cursive;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 💕 CSS สำหรับหัวใจลอยพื้นหลัง */
+        .heart-bg {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.6);
+            animation: floatUp 10s linear infinite;
+            bottom: -10vh;
+            z-index: 0;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+            100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- Card Styles --- */
+        .card {
+            background: rgba(255, 255, 255, 0.92);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(255, 105, 135, 0.2);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 1;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .gif-container {
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s ease;
+            min-height: 200px;
+        }
+
+        .gif-container img {
+            max-width: 100%;
+            height: auto;
+            max-height: 220px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(255, 105, 135, 0.15);
+            object-fit: cover;
+            transition: all 0.3s;
+        }
+
+        h1 {
+            font-family: 'Fredoka', sans-serif;
+            color: #ff4757;
+            font-size: 2rem;
+            margin: 10px 0 30px 0;
+            line-height: 1.3;
+            transition: all 0.5s ease;
+            text-shadow: 2px 2px 4px rgba(255, 71, 87, 0.1);
+        }
+
+        /* 💖 เน้นชื่อ Jean */
+        .highlight-name {
+            color: #ff1f34;
+            font-weight: 700;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 28px;
+            font-size: 1.1rem;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .yes-btn {
+            background: linear-gradient(to right, #ff758c, #ff7eb3);
+            color: white;
+            z-index: 10;
+        }
+
+        .yes-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 117, 140, 0.5);
+        }
+        
+        .yes-btn:active {
+             transform: scale(0.95);
+        }
+
+        .no-btn {
+            background-color: #f1f2f6;
+            color: #747d8c;
+            border: 2px solid transparent;
+        }
+
+        .no-btn:hover {
+            background-color: #dfe4ea;
+            border-color: #d1ccc0;
+            transform: translateY(-2px);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .success-mode {
+            transform: scale(1.02);
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 20px 50px rgba(255, 71, 87, 0.3);
+        }
+
+        .success-text {
+            color: #ff4757;
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            animation: bounceIn 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.1); opacity: 1; }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+
+        /* --- Media Queries --- */
+        @media (max-width: 480px) {
+            .card { padding: 30px 20px; width: 88%; }
+            h1 { font-size: 1.6rem; margin-bottom: 25px; }
+            .gif-container img { max-height: 180px; }
+            button { padding: 10px 22px; font-size: 1rem; }
+            .success-text { font-size: 1.6rem; }
+        }
+
+        @media (max-height: 640px) {
+             .card { padding: 20px; }
+            .gif-container { margin-bottom: 15px; min-height: 150px;}
+            .gif-container img { max-height: 150px; }
+            h1 { font-size: 1.4rem; margin: 15px 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card" id="mainCard">
+        <div class="gif-container" id="gifContainer">
+            <img id="mainGif" src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExc3FpMnlwYWZzMmxxc3lxMWtwNTZyc2lqMnZ2dWx0eGVxZWFobXRmNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/wvYNSqBAMDVx8CEYkt/giphy.gif" alt="Please be mine">
+        </div>
+
+        <h1 id="question">Jean, will you be my Valentine?</h1>
+
+        <div class="buttons" id="btnContainer">
+            <button class="yes-btn" id="yesBtn" onclick="handleYesClick()">Yes!</button>
+            <button class="no-btn" id="noBtn" onclick="handleNoClick()">No</button>
+        </div>
+    </div>
+
+    <script>
+        // 💕 ฟังก์ชันสร้างหัวใจลอยพื้นหลัง
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-bg');
+            heart.innerHTML = ['❤', '💖', '💕', '💗'][Math.floor(Math.random() * 4)];
+            
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = Math.random() * 25 + 15 + 'px';
+            heart.style.animationDuration = Math.random() * 8 + 7 + 's'; 
+            
+            document.body.appendChild(heart);
+            
+            setTimeout(() => { heart.remove(); }, 15000);
+        }
+        setInterval(createHeart, 600);
+
+        // --- Logic ปุ่ม Yes/No ---
+        let noCount = 0;
+        const noTexts = [
+            "Are you sure?", "Really sure??", "Auan, think again!", "Last chance!", 
+            "Surely not?", "You might regret this!", "Give it another thought!", 
+            "Are you absolutely certain?", "This could be a mistake!", "Have a heart!", 
+            "Don't be so cold!", "Change of heart?", "Wouldn't you reconsider?", 
+            "Is that your final answer?", "You're breaking my heart ;("
+        ];
+
+        const sadGifs = [
+            "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdHY1M2NpbXBjcnlkZ25wNTAyZG84cDY5MjMyN3pwdDF3dGxvOTZ3aiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Zl7u48zLVFgLpRwq6f/giphy.gif",
+            "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2hkcjI5c2VncDY0ZzIzaXRtd3hmejhuY2I5cWlycWgxMHN0bXoyaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/fFa05KbZowXiEIyRse/giphy.gif",
+            "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2ZjcTh3bmJucjRlOWZkOXNsaXEydW0wYmN5Zmg4dXBheHE0ZHpqbiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/OBNZCbTy1s8u8i7Wre/giphy.gif",
+            "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExa3ppOGJmajBrY2RwZXdnbDBncWVrcnVham53bWM0cDRlbXNhb2puMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/qpCvOBBmBkble/giphy.gif"
+        ];
+
+        function handleNoClick() {
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('yesBtn');
+            const mainGif = document.getElementById('mainGif');
+            const question = document.getElementById('question');
+
+            // เปลี่ยนข้อความและรูปภาพ
+            noBtn.innerText = noTexts[noCount % noTexts.length];
+            const gifIndex = Math.min(noCount, sadGifs.length - 1);
+            mainGif.src = sadGifs[gifIndex];
+
+            // ขยายปุ่ม Yes
+            const currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+            yesBtn.style.fontSize = `${currentSize * 1.3}px`;
+            const currentPadV = parseFloat(window.getComputedStyle(yesBtn).paddingTop);
+            const currentPadH = parseFloat(window.getComputedStyle(yesBtn).paddingLeft);
+            yesBtn.style.padding = `${currentPadV * 1.1}px ${currentPadH * 1.15}px`;
+            
+            // ทำให้ปุ่ม No เล็กลง
+            const currentNoSize = parseFloat(window.getComputedStyle(noBtn).fontSize);
+            if (currentNoSize > 10) { 
+                 noBtn.style.fontSize = `${currentNoSize * 0.9}px`;
+                 noBtn.style.padding = `${currentPadV * 0.9}px ${currentPadH * 0.9}px`;
+            }
+            
+            // สั่นหัวข้อ
+            question.style.animation = "shake 0.5s";
+            setTimeout(() => question.style.animation = "", 500);
+
+            noCount++;
+        }
+
+        function handleYesClick() {
+            document.getElementById('mainGif').src = "https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif";
+            document.getElementById('btnContainer').classList.add('hidden');
+
+            const question = document.getElementById('question');
+            question.innerHTML = "YAYYY! I Love You, <span class='highlight-name'>Auann</span>! 💖";
+            question.classList.add('success-text');
+            
+            document.getElementById('mainCard').classList.add('success-mode');
+            launchConfetti();
+        }
+
+        function launchConfetti() {
+            var duration = 5 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) return clearInterval(interval);
+                var particleCount = 50 * (timeLeft / duration);
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random(), y: Math.random() - 0.2 } }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random(), y: Math.random() + 0.2 } }));
+            }, 250);
+        }
+    </script>
+</body>
+</html>
